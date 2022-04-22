@@ -11,7 +11,7 @@ const Container = ({ checked, name }) => {
         <>
             <li className="bg-blue-700 border-b border-solid border-slate-700 flex items-center 
                 justify-between px-4 py-4 last:border-0">
-                <div className='flex items-center grow pl-3'>
+                <div className='flex items-center grow pr-3'>
                     <label className='check-container'>
                         <input 
                             className=''
@@ -39,8 +39,8 @@ const Container = ({ checked, name }) => {
                 {`
                     .item__button {
                         background-image: url(/images/icon-cross.svg);
-                        height: 15px;
-                        width: 15px;
+                        height: 12px;
+                        width: 12px;
                     }
                 `}
             </style>
