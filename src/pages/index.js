@@ -5,11 +5,23 @@ const Container = () => {
         <div>
             <div>
                 <Head title="Home" />
-                <h1 className="font-bold text-2xl">Hello world</h1>
+                <header className="bg-center bg-cover bg-no-repeat header">
+                    <div className="flex justify-between items-center">
+                        <h1 className="text-slate-200 uppercase">
+                            Todo
+                        </h1>
+                        <button aria-label="theme toggle"></button>
+                    </div>
+                </header>
 
             </div>
 
-            <style jsx>{``}</style>
+            <style jsx>{`
+                .header {
+                    background-image: url(/images/bg-mobile-dark.jpg);
+                    height: 250px;
+                }
+            `}</style>
         </div>
     );
 };
