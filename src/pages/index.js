@@ -13,7 +13,16 @@ const Container = () => {
                         <button aria-label="theme toggle" className="bg-center bg-no-repeat header__toggle-button"></button>
                     </div>
                 </header>
-
+                <main className="px-[5%]">
+                    <div className="container">
+                        <form className="bg-blue-700 flex items-center">
+                            <input 
+                                className="bg-transparent grow text-base px-4 py-3 outline-none text-slate-200" 
+                                placeholder='Create a new todo...'
+                            />
+                        </form>
+                    </div>
+                </main>
             </div>
 
             <style jsx>{`
@@ -30,6 +39,10 @@ const Container = () => {
                     background-image: url(/images/icon-sun.svg);
                     height: 36px;
                     width: 36px;
+                }
+
+                .container {
+                    transform: translateY(-160px);
                 }
             `}</style>
         </div>
