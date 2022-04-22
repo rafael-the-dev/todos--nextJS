@@ -1,6 +1,28 @@
+import { useId } from 'react'
+
 import Head from 'next/head'
 
+import TodosItem from "src/components/TodosItem"
+
 const Container = () => {
+    const list = [
+        {
+            checked: false,
+            name: "Jog around the park"
+        },
+        {
+            checked: false,
+            name: "Jog around the park"
+        },
+        {
+            checked: false,
+            name: "Jog around the park"
+        },
+        {
+            checked: false,
+            name: "Jog around the park"
+        }
+    ]
     return (
         <div>
             <div>
@@ -29,6 +51,11 @@ const Container = () => {
                                 placeholder='Create a new todo...'
                             />
                         </form>
+                        <ul className='mt-12'>
+                            { 
+                                list.map(item => <TodosItem key={useId()} { ...item} />)
+                            }
+                        </ul>
                     </div>
                 </main>
             </div>
