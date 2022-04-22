@@ -5,7 +5,7 @@ const Container = () => {
         <div>
             <div>
                 <Head title="Home" />
-                <h1>Hello world</h1>
+                <h1 className="font-bold text-2xl">Hello world</h1>
 
             </div>
 
