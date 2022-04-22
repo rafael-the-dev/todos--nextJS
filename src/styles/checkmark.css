@@ -25,12 +25,12 @@
     background-color: transparent;
     border: 1px solid #747070;
     border-radius: 50%;
-    height: 25px;
+    height: 23px;
     left: 0;
     position: absolute;
     transform: translateY(-50%);
     top: 0;
-    width: 25px;
+    width: 23px;
 }
   
 /* When the checkbox is checked, add a linear gradient */

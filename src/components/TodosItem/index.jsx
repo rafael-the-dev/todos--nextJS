@@ -19,7 +19,7 @@ const Container = ({ checked, name }) => {
                         />
                         <span className="checkmark"></span>
                     </label>
-                    <label className='ml-3 text-slate-300 opacity-70'>
+                    <label className={`ml-3 text-slate-300 opacity-70 ${isChecked ? "line-through" : ""}`}>
                         { name }
                     </label>
                 </div>

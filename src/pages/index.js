@@ -35,7 +35,7 @@ const Container = () => {
                         <button aria-label="theme toggle" className="bg-center bg-no-repeat header__toggle-button"></button>
                     </div>
                 </header>
-                <main className="bg-blue-700 main px-[5%]">
+                <main className="main px-[5%]">
                     <div className="container">
                         <form className="bg-blue-700 flex items-center px-4">
                             <label className='check-container'>
@@ -77,6 +77,7 @@ const Container = () => {
                 }
 
                 .main {
+                    background-color: #0d0e1a;
                     min-height: 61vh;
                 }
 
