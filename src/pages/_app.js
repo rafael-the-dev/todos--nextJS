@@ -1,6 +1,7 @@
 import Head from "next/head"
 
 import "src/styles/tailwind.css"
+import "src/styles/checkmark.css"
 
 const App = ({ Component, pageProps }) => {
     return (

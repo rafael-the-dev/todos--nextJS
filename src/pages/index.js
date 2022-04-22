@@ -13,9 +13,17 @@ const Container = () => {
                         <button aria-label="theme toggle" className="bg-center bg-no-repeat header__toggle-button"></button>
                     </div>
                 </header>
-                <main className="px-[5%]">
+                <main className="bg-blue-700 main px-[5%]">
                     <div className="container">
-                        <form className="bg-blue-700 flex items-center">
+                        <form className="bg-blue-700 flex items-center px-4">
+                            <label className='check-container'>
+                                <input 
+                                    className=''
+                                    type="checkbox" 
+
+                                />
+                                <span className="checkmark"></span>
+                            </label>
                             <input 
                                 className="bg-transparent grow text-base px-4 py-3 outline-none text-slate-200" 
                                 placeholder='Create a new todo...'
@@ -39,6 +47,10 @@ const Container = () => {
                     background-image: url(/images/icon-sun.svg);
                     height: 36px;
                     width: 36px;
+                }
+
+                .main {
+                    min-height: 61vh;
                 }
 
                 .container {
