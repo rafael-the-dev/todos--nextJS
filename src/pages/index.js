@@ -16,7 +16,7 @@ const Container = () => {
         },
         {
             checked: false,
-            name: "Jog around the park"
+            name: "Jog around the park in Maputo next BCI brach"
         },
         {
             checked: false,
