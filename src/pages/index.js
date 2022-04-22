@@ -5,12 +5,12 @@ const Container = () => {
         <div>
             <div>
                 <Head title="Home" />
-                <header className="bg-center bg-cover bg-no-repeat header">
+                <header className="bg-center bg-cover bg-no-repeat px-[5%] pt-6 header">
                     <div className="flex justify-between items-center">
-                        <h1 className="text-slate-200 uppercase">
+                        <h1 className="font-bold text-slate-200 text-2xl uppercase header__title">
                             Todo
                         </h1>
-                        <button aria-label="theme toggle"></button>
+                        <button aria-label="theme toggle" className="bg-center bg-no-repeat header__toggle-button"></button>
                     </div>
                 </header>
 
@@ -20,6 +20,16 @@ const Container = () => {
                 .header {
                     background-image: url(/images/bg-mobile-dark.jpg);
                     height: 250px;
+                }
+
+                .header__title {
+                    letter-spacing: 8px;
+                }
+
+                .header__toggle-button {
+                    background-image: url(/images/icon-sun.svg);
+                    height: 36px;
+                    width: 36px;
                 }
             `}</style>
         </div>
