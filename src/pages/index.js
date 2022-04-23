@@ -1,10 +1,12 @@
-import { useId } from 'react'
+import { useContext, useId } from 'react'
 
 import Head from 'next/head'
+import { ThemeContext } from 'src/context/ThemeContext'
 
 import TodosItem from "src/components/TodosItem"
 
 const Container = () => {
+    const { toggleTheme } = useContext(ThemeContext)
     const list = [
         {
             checked: false,
@@ -32,7 +34,10 @@ const Container = () => {
                         <h1 className="font-bold text-slate-200 text-2xl uppercase header__title">
                             Todo
                         </h1>
-                        <button aria-label="theme toggle" className="bg-center bg-no-repeat header__toggle-button"></button>
+                        <button 
+                            aria-label="theme toggle" 
+                            className="bg-center bg-no-repeat header__toggle-button"
+                            onClick={toggleTheme}></button>
                     </div>
                 </header>
                 <main className="main px-[5%]">

@@ -3,6 +3,7 @@ import Head from "next/head"
 import "src/styles/tailwind.css"
 import "src/styles/checkmark.css"
 import "src/styles/global.css"
+import { ThemeContextProvider } from "src/context/ThemeContext";
 
 const App = ({ Component, pageProps }) => {
     return (
@@ -10,7 +11,9 @@ const App = ({ Component, pageProps }) => {
             <Head>
                 <meta name="viewport" content="initial-scale=1, width=device-width" />
             </Head>
-            <Component { ...pageProps } />
+            <ThemeContextProvider>
+                <Component { ...pageProps } />
+            </ThemeContextProvider>
         </>
     );
 };
