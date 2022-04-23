@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "classnames": "^2.3.1",
     "config": "^3.3.7",
     "mysql": "^2.18.1",
     "next": "12.1.5",

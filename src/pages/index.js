@@ -5,6 +5,9 @@ import { ThemeContext } from 'src/context/ThemeContext'
 
 import TodosItem from "src/components/TodosItem"
 
+import styles from 'src/styles/home.module.css'
+import classNames from 'classnames'
+
 const Container = () => {
     const { toggleTheme } = useContext(ThemeContext)
     const list = [
@@ -27,7 +30,7 @@ const Container = () => {
     ]
     return (
         <div>
-            <div className="bg-no-repeat app">
+            <div className={classNames("bg-no-repeat app", styles.app)}>
                 <Head title="Home" />
                 <header className="bg-center bg-cover bg-no-repeat px-[5%] pt-6 header sm:pt-12">
                     <div className="flex justify-between items-center sm:mx-auto sm:max-w-[450px] md:max-w-[550px]">
@@ -42,17 +45,17 @@ const Container = () => {
                 </header>
                 <main className="main px-[5%]">
                     <div className="container sm:mx-auto sm:max-w-[450px] md:max-w-[550px]">
-                        <form className="bg-blue-700 flex items-center px-4 py-1">
+                        <form className="dark:bg-blue-700 flex items-center px-4 py-1 bg-slate-200">
                             <label className='check-container'>
                                 <input 
                                     className=''
                                     type="checkbox" 
-
                                 />
                                 <span className="checkmark"></span>
                             </label>
                             <input 
-                                className="bg-transparent grow text-base px-4 py-3 outline-none text-slate-200" 
+                                className="bg-transparent grow text-base px-4 py-3 outline-none dark:text-slate-200
+                                text-blue-700" 
                                 placeholder='Create a new todo...'
                             />
                         </form>
@@ -61,19 +64,21 @@ const Container = () => {
                                 { 
                                     list.map(item => <TodosItem key={useId()} { ...item} />)
                                 }
-                                <li className="bg-blue-700 border-b border-solid border-slate-700 
-                                    flex items-center justify-between px-4 py-4 last:border-0">
-                                    <span className="text-slate-300 opacity-40">4 items left</span>
-                                    <button className="capitalize text-slate-300 opacity-40 hover:text-white hover:opacity-100">
+                                <li className="dark:bg-blue-700 border-b border-solid dark:border-slate-700 
+                                    flex items-center justify-between px-4 py-4 last:border-0 bg-slate-200">
+                                    <span className="dark:text-slate-300 dark:opacity-40 text-slate-500">4 items left</span>
+                                    <button className="capitalize dark:text-slate-300 dark:opacity-40 
+                                        dark:hover:text-white hover:opacity-100 text-slate-500">
                                         Clear completed
                                     </button>
                                 </li>
                             </ul>
                         </div>
-                        <div className="bg-blue-700 flex items-center justify-center mt-8 text-slate-500 py-4">
-                            <button className="mr-3 hover:text-white">All</button>
-                            <button className="mr-3 hover:text-white">Active</button>
-                            <button className="hover:text-white">Completed</button>
+                        <div className="dark:bg-blue-700 flex items-center justify-center mt-8 text-slate-500 
+                            py-4 bg-slate-200">
+                            <button className="mr-3 dark:hover:text-white hover:text-slate-700">All</button>
+                            <button className="mr-3 dark:hover:text-white hover:text-slate-700">Active</button>
+                            <button className="dark:hover:text-white hover:text-slate-700">Completed</button>
                         </div>
                         <div className="mt-12">
                             <p className="text-center text-slate-500">Drag and drop to reorder list</p>
@@ -114,9 +119,8 @@ const Container = () => {
                     }
 
                     .app {
-                        background-image: url(/images/bg-desktop-dark.jpg);
+                        background-image: url(/images/bg-desktop-light.jpg);
                         background-size: 100% 290px;
-                        background-color: #0d0e1a;
                         min-height: 100vh;
                     }
 
