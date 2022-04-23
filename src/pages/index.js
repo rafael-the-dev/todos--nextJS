@@ -25,10 +25,10 @@ const Container = () => {
     ]
     return (
         <div>
-            <div>
+            <div className="font-bold">
                 <Head title="Home" />
-                <header className="bg-center bg-cover bg-no-repeat px-[5%] pt-6 header">
-                    <div className="flex justify-between items-center">
+                <header className="bg-center bg-cover bg-no-repeat px-[5%] pt-6 header sm:pt-12">
+                    <div className="flex justify-between items-center sm:mx-auto sm:max-w-[450px] md:max-w-[550px]">
                         <h1 className="font-bold text-slate-200 text-2xl uppercase header__title">
                             Todo
                         </h1>
@@ -36,7 +36,7 @@ const Container = () => {
                     </div>
                 </header>
                 <main className="main px-[5%]">
-                    <div className="container">
+                    <div className="container sm:mx-auto sm:max-w-[450px] md:max-w-[550px]">
                         <form className="bg-blue-700 flex items-center px-4 py-1">
                             <label className='check-container'>
                                 <input 
@@ -100,6 +100,13 @@ const Container = () => {
 
                 .container {
                     transform: translateY(-160px);
+                }
+
+                @media screen and (min-width: 600px) {
+                    .header {
+                        background-image: url(/images/bg-desktop-dark.jpg);
+                        height: 290px;
+                    }
                 }
             `}</style>
         </div>
