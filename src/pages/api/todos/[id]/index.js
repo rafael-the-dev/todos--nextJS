@@ -11,8 +11,11 @@ const requestHandler = async (req, res) => {
                 break;
             }
             case "GET": {
-                const todo = await queryPromise({ query: `SELECT * FROM todos WHERE ID=${id}`});
-                res.send({ todo })
+                const todos = await queryPromise({ query: `SELECT * FROM todos WHERE ID=${id}`});
+                if(todos.length === 0) 
+                    res.status(404).json({})
+                else
+                    res.send({ todo: todos[0] })
                 break;
             }
         }
