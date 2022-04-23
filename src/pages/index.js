@@ -25,7 +25,7 @@ const Container = () => {
     ]
     return (
         <div>
-            <div className="font-bold">
+            <div className="bg-no-repeat app">
                 <Head title="Home" />
                 <header className="bg-center bg-cover bg-no-repeat px-[5%] pt-6 header sm:pt-12">
                     <div className="flex justify-between items-center sm:mx-auto sm:max-w-[450px] md:max-w-[550px]">
@@ -104,8 +104,24 @@ const Container = () => {
 
                 @media screen and (min-width: 600px) {
                     .header {
+                        background-image: none;
+                        height: auto;
+                    }
+
+                    .app {
                         background-image: url(/images/bg-desktop-dark.jpg);
-                        height: 290px;
+                        background-size: 100% 290px;
+                        background-color: #0d0e1a;
+                        min-height: 100vh;
+                    }
+
+                    .main {
+                        background-color: transparent;
+                        margin-top: 2.4rem;
+                    }
+
+                    .container {
+                        transform: translateY(0);
                     }
                 }
             `}</style>
