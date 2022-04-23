@@ -59,16 +59,16 @@ const Container = () => {
                                 <li className="bg-blue-700 border-b border-solid border-slate-700 
                                     flex items-center justify-between px-4 py-4 last:border-0">
                                     <span className="text-slate-300 opacity-40">4 items left</span>
-                                    <button className="capitalize text-slate-300 opacity-40">
+                                    <button className="capitalize text-slate-300 opacity-40 hover:text-white hover:opacity-100">
                                         Clear completed
                                     </button>
                                 </li>
                             </ul>
                         </div>
                         <div className="bg-blue-700 flex items-center justify-center mt-8 text-slate-500 py-4">
-                            <button className="mr-3">All</button>
-                            <button className="mr-3">Active</button>
-                            <button>Completed</button>
+                            <button className="mr-3 hover:text-white">All</button>
+                            <button className="mr-3 hover:text-white">Active</button>
+                            <button className="hover:text-white">Completed</button>
                         </div>
                         <div className="mt-12">
                             <p className="text-center text-slate-500">Drag and drop to reorder list</p>
