@@ -2,6 +2,7 @@ const { queryPromise } = require("src/helpers/db");
 
 const requestHandler = async (req, res) => {
     const id = parseInt(req.query.id);
+   const { name } = req.body;
     
     try {
         switch(req.method) {
@@ -18,8 +19,14 @@ const requestHandler = async (req, res) => {
                     res.send({ todo: todos[0] })
                 break;
             }
+            case "PATCH": {
+                await queryPromise({ query: `UPDATE todos SET name="${name}" WHERE ID=${id}`});
+                res.status(204).send()
+                break;
+            }
         }
     } catch(error) {
+        console.log(error)
         res.status(500).json({ message: "Internal server error"});
     }
 };
