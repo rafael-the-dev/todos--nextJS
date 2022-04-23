@@ -1,4 +1,21 @@
-
 .my-anchor-css-class {
+    color: #009fb1;
+}
+
+.dark .my-anchor-css-class {
     color: #16838f;
+}
+
+.dark .header {
+    background-image: url(/images/bg-mobile-dark.jpg) !important;
+}
+
+@media screen and (min-width: 600px) {
+    .dark .app {
+        background-image: url(/images/bg-desktop-dark.jpg) !important;
+    }
+
+    .dark .header {
+        background-image: none !important;
+    }
 }

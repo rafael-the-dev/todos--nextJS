@@ -30,7 +30,7 @@ const Container = () => {
     ]
     return (
         <div>
-            <div className={classNames("bg-no-repeat app", styles.app)}>
+            <div className={classNames("bg-no-repeat app sm:dark:bg-blue-900", styles.app)}>
                 <Head title="Home" />
                 <header className="bg-center bg-cover bg-no-repeat px-[5%] pt-6 header sm:pt-12">
                     <div className="flex justify-between items-center sm:mx-auto sm:max-w-[450px] md:max-w-[550px]">
@@ -43,7 +43,7 @@ const Container = () => {
                             onClick={toggleTheme}></button>
                     </div>
                 </header>
-                <main className="main px-[5%]">
+                <main className="main px-[5%] dark:bg-blue-900 sm:dark:bg-transparent">
                     <div className="container sm:mx-auto sm:max-w-[450px] md:max-w-[550px]">
                         <form className="dark:bg-blue-700 flex items-center px-4 py-1 bg-slate-200">
                             <label className='check-container'>
@@ -89,7 +89,7 @@ const Container = () => {
 
             <style jsx>{`
                 .header {
-                    background-image: url(/images/bg-mobile-dark.jpg);
+                    background-image: url(/images/bg-mobile-light.jpg);
                     height: 250px;
                 }
 
@@ -104,7 +104,6 @@ const Container = () => {
                 }
 
                 .main {
-                    background-color: #0d0e1a;
                     min-height: 61vh;
                 }
 
