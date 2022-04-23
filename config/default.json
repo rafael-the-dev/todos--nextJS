@@ -1,0 +1,8 @@
+{
+    "dbConfig": {
+        "database": "lesson",
+        "host": "localhost",
+        "password": "",
+        "user": "root"
+    }
+}
