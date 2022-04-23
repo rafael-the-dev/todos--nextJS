@@ -1,18 +1,23 @@
 const { queryPromise } = require("src/helpers/db");
 
 const requestHandler = async (req, res) => {
-    const { id } = req.query;
+    const id = parseInt(req.query.id);
     
-    switch(req.method) {
-        case "GET": {
-            try {
-                const todo = await queryPromise({ query: `SELECT * FROM todos WHERE ID=${parseInt(id)}`});
-                res.send({ todo })
-            } catch(error) {
-                res.status(500).json({ message: "Internal server error"});
+    try {
+        switch(req.method) {
+            case "DELETE": {
+                await queryPromise({ query: `DELETE FROM todos WHERE ID=${id}`});
+                res.status(204).send()
+                break;
             }
-            break;
+            case "GET": {
+                const todo = await queryPromise({ query: `SELECT * FROM todos WHERE ID=${id}`});
+                res.send({ todo })
+                break;
+            }
         }
+    } catch(error) {
+        res.status(500).json({ message: "Internal server error"});
     }
 };
 
