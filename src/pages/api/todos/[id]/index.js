@@ -1,8 +1,8 @@
 const { queryPromise } = require("src/helpers/db");
 
 const requestHandler = async (req, res) => {
-    const id = parseInt(req.query.id);
-   const { name } = req.body;
+    const { id } = req.query;
+    const { name } = req.body;
     
     try {
         switch(req.method) {
