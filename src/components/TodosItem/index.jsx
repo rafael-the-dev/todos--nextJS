@@ -54,7 +54,11 @@ const Container = ({ ID, isActive, name, position }) => {
                             { name }
                     </ShowMoreText>
                 </div>
-                <button aria-label="delete" className="bg-center bg-no-repeat item__button" onClick={deleteTodo}></button>
+                <button 
+                    aria-label="delete" 
+                    className="bg-center bg-no-repeat item__button hover:bg-red-600 hover:p-3" 
+                    onClick={deleteTodo}>
+                </button>
             </li>
             <style jsx>
                 {`
