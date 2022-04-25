@@ -1,11 +1,25 @@
-import { useCallback, useState } from 'react'
+import { useContext, useState } from 'react'
 
 import ShowMoreText from "react-show-more-text";
 
-const Container = ({ isActive, name }) => {
-    const [ isChecked, setIsChecked ] = useState(!Boolean(isActive));
+import { AppContext } from 'src/context/AppContext';
 
-    const changeHandler = useCallback(() => setIsChecked(c => !c), []);
+const Container = ({ ID, isActive, name, position }) => {
+    //const [ isChecked, setIsChecked ] = useState(!Boolean(isActive));
+    const { fetchTodos } = useContext(AppContext)
+    const isChecked = !Boolean(isActive);
+    //setIsChecked(c => !c)
+    const changeHandler = async () => {
+        try {
+            await fetch(`/api/todos/${ID}`, {
+                body: JSON.stringify({ isActive: Boolean(isActive) ? 0 : 1, name, position }),
+                method: "PATCH"
+            })
+            fetchTodos();
+        } catch(err) {
+            console.log(err)
+        }
+    };
 
     return (
         <>

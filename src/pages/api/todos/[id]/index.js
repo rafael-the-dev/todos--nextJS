@@ -2,7 +2,8 @@ const { queryPromise } = require("src/helpers/db");
 
 const requestHandler = async (req, res) => {
     const { id } = req.query;
-    const { isActive, name, position } = req.body;
+    console.log(req.body)
+    const { isActive, name, position } = JSON.parse(req.body);
     
     try {
         switch(req.method) {
