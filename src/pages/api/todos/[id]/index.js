@@ -7,12 +7,12 @@ const requestHandler = async (req, res) => {
     try {
         switch(req.method) {
             case "DELETE": {
-                await queryPromise({ query: `DELETE FROM todos WHERE ID=${id}`});
+                await queryPromise({ query: `DELETE FROM todos WHERE ID="${id}"`});
                 res.status(204).send()
                 break;
             }
             case "GET": {
-                const todos = await queryPromise({ query: `SELECT * FROM todos WHERE ID=${id}`});
+                const todos = await queryPromise({ query: `SELECT * FROM todos WHERE ID="${id}"`});
                 if(todos.length === 0) 
                     res.status(404).json({})
                 else
@@ -20,7 +20,7 @@ const requestHandler = async (req, res) => {
                 break;
             }
             case "PATCH": {
-                await queryPromise({ query: `UPDATE todos SET name="${name}" WHERE ID=${id}`});
+                await queryPromise({ query: `UPDATE todos SET name="${name}" WHERE ID="${id}"`});
                 res.status(204).send()
                 break;
             }
