@@ -1,6 +1,6 @@
 {
     "dbConfig": {
-        "database": "lesson",
+        "database": "Todos",
         "host": "localhost",
         "password": "",
         "user": "root"
