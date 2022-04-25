@@ -2,8 +2,6 @@ const { queryPromise } = require("src/helpers/db");
 
 const requestHandler = async (req, res) => {
     const { id } = req.query;
-    console.log(req.body)
-    const { isActive, name, position } = JSON.parse(req.body);
     
     try {
         switch(req.method) {
@@ -21,6 +19,7 @@ const requestHandler = async (req, res) => {
                 break;
             }
             case "PATCH": {
+                const { isActive, name, position } = JSON.parse(req.body);
                 await queryPromise({ 
                     query: `UPDATE todos SET isActive=?, name=?, position=? WHERE ID=?`,
                     values: [ isActive, name, position, id ] 

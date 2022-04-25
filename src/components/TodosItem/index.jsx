@@ -21,6 +21,13 @@ const Container = ({ ID, isActive, name, position }) => {
         }
     };
 
+    const deleteTodo = async() => {
+        await fetch(`/api/todos/${ID}`, {
+            method: "DELETE"
+        });
+        fetchTodos();
+    };
+
     return (
         <>
             <li className="dark:bg-blue-700 border-b border-solid border-slate-400 dark:border-slate-700 flex items-center 
@@ -47,7 +54,7 @@ const Container = ({ ID, isActive, name, position }) => {
                             { name }
                     </ShowMoreText>
                 </div>
-                <button aria-label="delete" className="bg-center bg-no-repeat item__button"></button>
+                <button aria-label="delete" className="bg-center bg-no-repeat item__button" onClick={deleteTodo}></button>
             </li>
             <style jsx>
                 {`
