@@ -2,7 +2,7 @@ const { queryPromise } = require("src/helpers/db");
 
 const requestHandler = async (req, res) => {
     const { id } = req.query;
-    const { name } = req.body;
+    const { isActive, name, position } = req.body;
     
     try {
         switch(req.method) {
@@ -20,7 +20,10 @@ const requestHandler = async (req, res) => {
                 break;
             }
             case "PATCH": {
-                await queryPromise({ query: `UPDATE todos SET name="${name}" WHERE ID="${id}"`});
+                await queryPromise({ 
+                    query: `UPDATE todos SET isActive=?, name=?, position=? WHERE ID=?`,
+                    values: [ isActive, name, position, id ] 
+                });
                 res.status(204).send()
                 break;
             }

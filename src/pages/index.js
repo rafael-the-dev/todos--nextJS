@@ -2,6 +2,7 @@ import { useContext, useId } from 'react'
 
 import Head from 'next/head'
 import { ThemeContext } from 'src/context/ThemeContext'
+import { AppContext } from 'src/context/AppContext'
 
 import TodosItem from "src/components/TodosItem"
 
@@ -9,25 +10,9 @@ import styles from 'src/styles/home.module.css'
 import classNames from 'classnames'
 
 const Container = () => {
-    const { toggleTheme } = useContext(ThemeContext)
-    const list = [
-        {
-            checked: false,
-            name: "Jog around the park"
-        },
-        {
-            checked: false,
-            name: "Jog around the park"
-        },
-        {
-            checked: false,
-            name: "Jog around the park in Maputo next BCI brach"
-        },
-        {
-            checked: false,
-            name: "Jog around the park"
-        }
-    ]
+    const { toggleTheme } = useContext(ThemeContext);
+    const { todos } = useContext(AppContext);
+    
     return (
         <div>
             <div className={classNames("bg-no-repeat app sm:dark:bg-blue-900", styles.app)}>
@@ -62,11 +47,13 @@ const Container = () => {
                         <div>
                             <ul className='mt-12'>
                                 { 
-                                    list.map(item => <TodosItem key={useId()} { ...item} />)
+                                    todos.map((item, index) => <TodosItem key={index} { ...item} />)
                                 }
                                 <li className="dark:bg-blue-700 border-b border-solid dark:border-slate-700 
                                     flex items-center justify-between px-4 py-4 last:border-0 bg-slate-200">
-                                    <span className="dark:text-slate-300 dark:opacity-40 text-slate-500">4 items left</span>
+                                    <span className="dark:text-slate-300 dark:opacity-40 text-slate-500">
+                                        { todos.length } item(s) left
+                                    </span>
                                     <button className="capitalize dark:text-slate-300 dark:opacity-40 
                                         dark:hover:text-white hover:opacity-100 text-slate-500">
                                         Clear completed

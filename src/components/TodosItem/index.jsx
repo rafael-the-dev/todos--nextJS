@@ -2,8 +2,8 @@ import { useCallback, useState } from 'react'
 
 import ShowMoreText from "react-show-more-text";
 
-const Container = ({ checked, name }) => {
-    const [ isChecked, setIsChecked ] = useState(false);
+const Container = ({ isActive, name }) => {
+    const [ isChecked, setIsChecked ] = useState(!Boolean(isActive));
 
     const changeHandler = useCallback(() => setIsChecked(c => !c), []);
 
