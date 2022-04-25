@@ -1,4 +1,4 @@
-import { useContext, useId } from 'react'
+import { useContext, useCallback, useEffect, useState } from 'react'
 
 import Head from 'next/head'
 import { ThemeContext } from 'src/context/ThemeContext'
@@ -12,6 +12,27 @@ import classNames from 'classnames'
 const Container = () => {
     const { toggleTheme } = useContext(ThemeContext);
     const { todos } = useContext(AppContext);
+
+    const [ filteredTodos , setFilteredTodos ] = useState([]);
+    const [ filterKey, setFilterKey ] = useState("");
+
+    const clickHandler = useCallback(prop => () => setFilterKey(prop), []);
+
+    useEffect(() => {
+        switch(filterKey) {
+            case "COMPLETE": {
+                setFilteredTodos(todos.filter(todo => !Boolean(todo.isActive)));
+                break;
+            }
+            case "ACTIVE": {
+                setFilteredTodos(todos.filter(todo => Boolean(todo.isActive)));
+                break;
+            }
+            default: {
+                setFilteredTodos(todos);
+            }
+        }
+    }, [ filterKey, todos ]);
     
     return (
         <div>
@@ -47,7 +68,7 @@ const Container = () => {
                         <div>
                             <ul className='mt-12'>
                                 { 
-                                    todos.map((item, index) => <TodosItem key={index} { ...item} />)
+                                    filteredTodos.map((item, index) => <TodosItem key={index} { ...item} />)
                                 }
                                 <li className="dark:bg-blue-700 border-b border-solid dark:border-slate-700 
                                     flex items-center justify-between px-4 py-4 last:border-0 bg-slate-200">
@@ -63,9 +84,21 @@ const Container = () => {
                         </div>
                         <div className="dark:bg-blue-700 flex items-center justify-center mt-8 text-slate-500 
                             py-4 bg-slate-200">
-                            <button className="mr-3 dark:hover:text-white hover:text-slate-700">All</button>
-                            <button className="mr-3 dark:hover:text-white hover:text-slate-700">Active</button>
-                            <button className="dark:hover:text-white hover:text-slate-700">Completed</button>
+                            <button 
+                                className={classNames("mr-3 dark:hover:text-white hover:text-slate-700", { "text-blue-500 font-bold": filterKey === ""})}
+                                onClick={clickHandler("")}>
+                                All
+                            </button>
+                            <button 
+                                className={classNames("mr-3 dark:hover:text-white hover:text-slate-700", { "text-blue-500 font-bold": filterKey === "ACTIVE"})}
+                                onClick={clickHandler("ACTIVE")}>
+                                Active
+                            </button>
+                            <button 
+                                className={classNames("dark:hover:text-white hover:text-slate-700", { "text-blue-500 font-bold": filterKey === "COMPLETE"})}
+                                onClick={clickHandler("COMPLETE")}>
+                                Completed
+                            </button>
                         </div>
                         <div className="mt-12">
                             <p className="text-center text-slate-500">Drag and drop to reorder list</p>
