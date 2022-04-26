@@ -1,4 +1,4 @@
-import { useContext, useCallback, useEffect, useRef, useState } from 'react'
+import { useContext, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import Head from 'next/head'
 import { ThemeContext } from 'src/context/ThemeContext'
@@ -15,6 +15,10 @@ const Container = () => {
 
     const [ filteredTodos , setFilteredTodos ] = useState([]);
     const [ filterKey, setFilterKey ] = useState("");
+
+    const sortList = useMemo(() => filteredTodos.sort((a, b) => {
+        return a.position - b.position;
+    }), [ filteredTodos ])
 
     const clickHandler = useCallback(prop => () => setFilterKey(prop), []);
 
@@ -36,7 +40,7 @@ const Container = () => {
 
             checkboxRef.current.checked = false;
             inputRef.current.value = "";
-            
+
             fetchTodos();
         } catch(err) {
             console.log(err)
@@ -96,7 +100,7 @@ const Container = () => {
                         <div>
                             <ul className='mt-12'>
                                 { 
-                                    filteredTodos.map((item, index) => <TodosItem key={index} { ...item} />)
+                                    sortList.map((item, index) => <TodosItem key={index} { ...item} />)
                                 }
                                 <li className="dark:bg-blue-700 border-b border-solid dark:border-slate-700 
                                     flex items-center justify-between px-4 py-4 last:border-0 bg-slate-200">
