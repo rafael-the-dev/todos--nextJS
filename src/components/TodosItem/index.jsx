@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useCallback } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 
 import ShowMoreText from "react-show-more-text";
@@ -10,14 +10,11 @@ const Container = ({ ID, isActive, name, position }) => {
     //const [ isChecked, setIsChecked ] = useState(!Boolean(isActive));
     const { fetchTodos } = useContext(AppContext)
     const isChecked = !Boolean(isActive);
-    //setIsChecked(c => !c)
-
-    console.log(ItemsTypes)
 
     const [{ opacity }, dragRef] = useDrag(
         () => ({
           type: ItemsTypes.TODOS_ITEM,
-          item: { position },
+          item: { ID, position },
           collect: (monitor) => ({
             opacity: monitor.isDragging() ? 0.5 : 1
           })
@@ -25,17 +22,28 @@ const Container = ({ ID, isActive, name, position }) => {
         [ position ]
     );
 
+    const switchPositions = useCallback(async ({ from, to }) => {
+        try {
+            await fetch(`/api/todos`, {
+                body: JSON.stringify({ from, to }),
+                method: "PATCH"
+            })
+            fetchTodos();
+        } catch(err) {
+            console.log(err)
+        }
+    }, [ fetchTodos ]);
+
     const [collectedProps, drop] = useDrop(() => ({
         accept: [ ItemsTypes.TODOS_ITEM ],
         drop: (item) => {
-                console.log(item);
-                
+                switchPositions({ from: item, to: { ID, position }})
             },
             collect: (monitor) => ({
                 isOver: !!monitor.isOver()
             })
         }),
-        []
+        [ ID, position ]
       )
 
     const changeHandler = async () => {
@@ -84,12 +92,15 @@ const Container = ({ ID, isActive, name, position }) => {
                             { name }
                     </ShowMoreText>
                 </div>
+                <button className="drag-button flex flex-col" ref={dragRef}>
+                    <span className='drag-button__line'></span>
+                    <span className='drag-button__line'></span>
+                </button>
                 <button 
                     aria-label="delete" 
                     className="bg-center bg-no-repeat item__button hover:bg-red-600 hover:p-3" 
                     onClick={deleteTodo}>
                 </button>
-                <button ref={dragRef}></button>
             </li>
             <style jsx>
                 {`
@@ -97,6 +108,21 @@ const Container = ({ ID, isActive, name, position }) => {
                         background-image: url(/images/icon-cross.svg);
                         height: 12px;
                         width: 12px;
+                    }
+
+                    .drag-button {
+                        margin-right: 17px;
+                    }
+
+                    .drag-button__line {
+                        background-color: #CCC;
+                        height: 3px;
+                        margin-bottom: 3px;
+                        width: 24px;
+                    }
+
+                    .drag-button__line:last-child {
+                        margin-bottom: 0;
                     }
                 `}
             </style>

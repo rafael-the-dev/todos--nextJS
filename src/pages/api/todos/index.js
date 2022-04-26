@@ -27,6 +27,20 @@ const requestHandler = async (req, res) => {
             }
             break;
         }
+        case "PATCH": {
+            try {
+                const { from, to } = JSON.parse(req.body);
+
+                await queryPromise({ query: "UPDATE todos SET position=? WHERE ID=?", values: [ to.position, from.ID] });
+                await queryPromise({ query: "UPDATE todos SET position=? WHERE ID=?", values: [ from.position, to.ID] });
+                
+                res.status(204).send()
+            } catch(error) {
+                console.error(error)
+                res.status(500).json({ message: "Internal server error"});
+            }
+            break;
+        }
         case "POST": {
             try {
                 const { isActive, name } = JSON.parse(req.body);
