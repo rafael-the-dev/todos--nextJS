@@ -1,4 +1,6 @@
 import Head from "next/head"
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd'
 
 import "src/styles/tailwind.css"
 import "src/styles/checkmark.css"
@@ -15,7 +17,9 @@ const App = ({ Component, pageProps }) => {
             </Head>
             <ThemeContextProvider>
                 <AppContextProvider>
-                    <Component { ...pageProps } />
+                    <DndProvider backend={HTML5Backend}>
+                        <Component { ...pageProps } />
+                    </DndProvider> 
                 </AppContextProvider>
             </ThemeContextProvider>
         </>

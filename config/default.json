@@ -4,5 +4,10 @@
         "host": "localhost",
         "password": "",
         "user": "root"
+    },
+    "dnd": {
+        "tododsItem": {
+            "type": "TODOS_ITEM"
+        }
     }
 }
