@@ -10,7 +10,9 @@ export const AppContextProvider = ({ children }) => {
         fetch("/api/todos")
             .then(res => res.json())
             .then(data => setTodos(data.todos))
-            .catch(console.log);
+            .catch(err => {
+                console.log(err);
+            });
     }, []);
 
     useEffect(() => {
