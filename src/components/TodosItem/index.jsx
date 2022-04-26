@@ -117,6 +117,10 @@ const Container = ({ ID, isActive, name, position }) => {
                         margin-right: 17px;
                     }
 
+                    .drag-button:hover .drag-button__line {
+                        background-color: #009fb1;
+                    }
+
                     .drag-button__line {
                         background-color: #CCC;
                         height: 3px;

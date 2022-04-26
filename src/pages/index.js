@@ -123,8 +123,8 @@ const Container = () => {
                                         { itemsNotCompleted } item(s) left
                                     </span>
                                     <button className="capitalize dark:text-slate-300 dark:opacity-40 
-                                        dark:hover:text-white hover:opacity-100 text-slate-500 
-                                        hover:text-red-700 hover:font-bold"
+                                        hover:opacity-100 text-slate-500 dark:hover:opacity-70
+                                        hover:text-red-700 dark:hover:text-red-700 hover:font-bold"
                                         onClick={deleteCompletedTodos}>
                                         Clear completed
                                     </button>
