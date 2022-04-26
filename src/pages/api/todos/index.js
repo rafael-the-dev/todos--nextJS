@@ -3,6 +3,20 @@ const { v4 } = require('uuid');
 
 const requestHandler = async (req, res) => {
     switch(req.method) {
+        case "DELETE": {
+            try {
+                const { filter } = req.query;
+                
+                if(filter === "completed") {
+                    await queryPromise({ query: "DELETE FROM todos WHERE isActive=?", values: [ 0 ] });
+                }
+                res.status(204).send();
+            } catch(error) {
+                console.error(error)
+                res.status(500).json({ message: "Internal server error"});
+            }
+            break;
+        }
         case "GET": {
             try {
                 const rows = await queryPromise({ query: "SELECT * FROM todos" });
@@ -25,7 +39,7 @@ const requestHandler = async (req, res) => {
                     query: `INSERT INTO todos (ID, name, isActive, position) VALUES (?, ?, ?, ?)`,
                     values: [ v4(), name, isActive, position]
                 });
-                
+
                 res.status(204).send()
             } catch(error) {
                 console.log(error)

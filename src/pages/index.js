@@ -28,6 +28,17 @@ const Container = () => {
 
     const inputRef = useRef(null);
     const checkboxRef = useRef(null);
+    const deleteCompletedTodos = useCallback(async () => {
+        try {
+            await fetch("/api/todos?filter=completed", {
+                method: "DELETE"
+            });
+
+            fetchTodos();
+        } catch(err) {
+            console.log(err)
+        }
+    }, [ fetchTodos ])
     const saveTodo = useCallback(async (event) => {
         event.preventDefault();
 
@@ -113,7 +124,8 @@ const Container = () => {
                                     </span>
                                     <button className="capitalize dark:text-slate-300 dark:opacity-40 
                                         dark:hover:text-white hover:opacity-100 text-slate-500 
-                                        hover:text-red-700 hover:font-bold">
+                                        hover:text-red-700 hover:font-bold"
+                                        onClick={deleteCompletedTodos}>
                                         Clear completed
                                     </button>
                                 </li>
