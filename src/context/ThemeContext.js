@@ -1,4 +1,4 @@
-import { createContext, useCallback, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useRef, useState } from "react";
 
 
 export const ThemeContext = createContext();
@@ -9,6 +9,16 @@ export const ThemeContextProvider = ({ children }) => {
     //const htmlRef = useRef();
 
     const toggleTheme = useCallback(() => setTheme(oldTheme => ({ isDarkTheme: !oldTheme.isDarkTheme })), []);
+    const localStorageName = useRef("__todo-app");
+
+    useEffect(() => {
+        const savedTheme = localStorage.getItem(localStorageName.current);
+        if(savedTheme === null) {
+            localStorage.setItem(localStorageName.current, JSON.stringify({ isDarkTheme: false }));
+        } else {
+            setTheme(JSON.parse(savedTheme));
+        }
+    }, []);
 
     useEffect(() => {
         if(theme.isDarkTheme) {
@@ -16,6 +26,8 @@ export const ThemeContextProvider = ({ children }) => {
         } else {
             document.querySelector("html").classList.remove("dark");
         }
+        
+        localStorage.setItem(localStorageName.current, JSON.stringify(theme));
     }, [ theme ]);
 
     return (

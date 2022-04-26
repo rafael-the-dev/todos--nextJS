@@ -96,8 +96,8 @@ const Container = ({ ID, isActive, name, position }) => {
                     </ShowMoreText>
                 </div>
                 <button className="drag-button flex flex-col" ref={dragRef}>
-                    <span className='drag-button__line'></span>
-                    <span className='drag-button__line'></span>
+                    <span className='drag-button__line dark:opacity-70'></span>
+                    <span className='drag-button__line dark:opacity-70'></span>
                 </button>
                 <button 
                     aria-label="delete" 
