@@ -11,15 +11,18 @@ const Container = ({ ID, isActive, name, position }) => {
     const { fetchTodos } = useContext(AppContext)
     const isChecked = !Boolean(isActive);
 
-    const [{ opacity }, dragRef] = useDrag(
+    const [collected, dragRef] = useDrag(
         () => ({
           type: ItemsTypes.TODOS_ITEM,
           item: { ID, position },
           collect: (monitor) => ({
             opacity: monitor.isDragging() ? 0.5 : 1
-          })
+          }),
+          isDragging: monitor => {
+            console.log()
+          }
         }),
-        [ position ]
+        [ ID, position ]
     );
 
     const switchPositions = useCallback(async ({ from, to }) => {
@@ -43,7 +46,7 @@ const Container = ({ ID, isActive, name, position }) => {
                 isOver: !!monitor.isOver()
             })
         }),
-        [ ID, position ]
+        [ ID, position, switchPositions ]
       )
 
     const changeHandler = async () => {

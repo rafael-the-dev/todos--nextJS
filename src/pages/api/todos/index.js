@@ -47,7 +47,13 @@ const requestHandler = async (req, res) => {
 
                 const rows = await queryPromise({ query: "SELECT * FROM todos"});
 
-                const position = rows.length === 0 ? 1 : rows[rows.length - 1].position + 1;
+                let position = 0;
+                rows.forEach(item => {
+                    if(item.position > position) {
+                        position = item.position
+                    }
+                });
+                position = position + 1;
 
                 await queryPromise({ 
                     query: `INSERT INTO todos (ID, name, isActive, position) VALUES (?, ?, ?, ?)`,
