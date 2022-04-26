@@ -1,5 +1,12 @@
 {
     "dbConfig": {
+        "database": "bzpsiu9ecwhxbd75a1l9",
+        "host": "bzpsiu9ecwhxbd75a1l9-mysql.services.clever-cloud.com",
+        "password": "qkRBrXZifKqLYpc8pwa3",
+        "port": 3306,
+        "user": "ukzrygct3fi336z9"
+    },
+    "dbChghghonfig": {
         "database": "Todos",
         "host": "localhost",
         "password": "",
