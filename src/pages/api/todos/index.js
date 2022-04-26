@@ -15,13 +15,17 @@ const requestHandler = async (req, res) => {
         }
         case "POST": {
             try {
-                const { isActive, name } = req.body;
+                const { isActive, name } = JSON.parse(req.body);
 
                 const rows = await queryPromise({ query: "SELECT * FROM todos"});
+
+                const position = rows.length === 0 ? 1 : rows[rows.length - 1].position + 1;
+
                 await queryPromise({ 
                     query: `INSERT INTO todos (ID, name, isActive, position) VALUES (?, ?, ?, ?)`,
-                    values: [ v4(), name, isActive, rows.length + 1]
+                    values: [ v4(), name, isActive, position]
                 });
+                
                 res.status(204).send()
             } catch(error) {
                 console.log(error)

@@ -1,4 +1,4 @@
-import { useContext, useCallback, useEffect, useState } from 'react'
+import { useContext, useCallback, useEffect, useRef, useState } from 'react'
 
 import Head from 'next/head'
 import { ThemeContext } from 'src/context/ThemeContext'
@@ -11,12 +11,38 @@ import classNames from 'classnames'
 
 const Container = () => {
     const { toggleTheme } = useContext(ThemeContext);
-    const { todos } = useContext(AppContext);
+    const { todos, fetchTodos } = useContext(AppContext);
 
     const [ filteredTodos , setFilteredTodos ] = useState([]);
     const [ filterKey, setFilterKey ] = useState("");
 
     const clickHandler = useCallback(prop => () => setFilterKey(prop), []);
+
+    const inputRef = useRef(null);
+    const checkboxRef = useRef(null);
+    const saveTodo = useCallback(async (event) => {
+        event.preventDefault();
+
+        const todo = {
+            isActive: checkboxRef.current.checked ? 0 : 1,
+            name: inputRef.current.value
+        };
+
+        try {
+            await fetch("/api/todos", {
+                body: JSON.stringify(todo),
+                method: "POST"
+            });
+
+            checkboxRef.current.checked = false;
+            inputRef.current.value = "";
+            
+            fetchTodos();
+        } catch(err) {
+            console.log(err)
+        }
+
+    }, [ fetchTodos ])
 
     useEffect(() => {
         switch(filterKey) {
@@ -51,10 +77,11 @@ const Container = () => {
                 </header>
                 <main className="main px-[5%] dark:bg-blue-900 sm:dark:bg-transparent">
                     <div className="container sm:mx-auto sm:max-w-[450px] md:max-w-[550px]">
-                        <form className="dark:bg-blue-700 flex items-center px-4 py-1 bg-slate-200">
+                        <form onSubmit={saveTodo} className="dark:bg-blue-700 flex items-center px-4 py-1 bg-slate-200">
                             <label className='check-container'>
                                 <input 
                                     className=''
+                                    ref={checkboxRef}
                                     type="checkbox" 
                                 />
                                 <span className="checkmark"></span>
@@ -63,6 +90,7 @@ const Container = () => {
                                 className="bg-transparent grow text-base px-4 py-3 outline-none dark:text-slate-200
                                 text-blue-700" 
                                 placeholder='Create a new todo...'
+                                ref={inputRef}
                             />
                         </form>
                         <div>
