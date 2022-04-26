@@ -18,7 +18,11 @@ const Container = () => {
 
     const sortList = useMemo(() => filteredTodos.sort((a, b) => {
         return a.position - b.position;
-    }), [ filteredTodos ])
+    }), [ filteredTodos ]);
+
+    const itemsNotCompleted = useMemo(() => {
+        return filteredTodos.filter(todo => Boolean(todo.isActive)).length
+    }, [ filteredTodos])
 
     const clickHandler = useCallback(prop => () => setFilterKey(prop), []);
 
@@ -105,10 +109,11 @@ const Container = () => {
                                 <li className="dark:bg-blue-700 border-b border-solid dark:border-slate-700 
                                     flex items-center justify-between px-4 py-4 last:border-0 bg-slate-200">
                                     <span className="dark:text-slate-300 dark:opacity-40 text-slate-500">
-                                        { todos.length } item(s) left
+                                        { itemsNotCompleted } item(s) left
                                     </span>
                                     <button className="capitalize dark:text-slate-300 dark:opacity-40 
-                                        dark:hover:text-white hover:opacity-100 text-slate-500">
+                                        dark:hover:text-white hover:opacity-100 text-slate-500 
+                                        hover:text-red-700 hover:font-bold">
                                         Clear completed
                                     </button>
                                 </li>
