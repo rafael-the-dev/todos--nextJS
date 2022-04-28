@@ -16,5 +16,9 @@
         "tododsItem": {
             "type": "TODOS_ITEM"
         }
+    },
+    "mongoDBConfig": {
+        "dbName": "todos",
+        "url": "mongodb+srv://rafael-the-dev:iH.-qJftk8g9cgc@cluster0.z64j5.mongodb.net/myFirstDatabase?authMechanism=DEFAULT"
     }
 }
