@@ -18,7 +18,8 @@
         }
     },
     "mongoDBConfig": {
-        "dbName": "todos",
+        "collection": "todos",
+        "db": "myFirstDatabase",
         "url": "mongodb+srv://rafael-the-dev:iH.-qJftk8g9cgc@cluster0.z64j5.mongodb.net/myFirstDatabase?authMechanism=DEFAULT"
     }
 }

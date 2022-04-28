@@ -1,7 +1,9 @@
 const { queryPromise } = require("src/helpers/db")
+const { createMongoDBConnection } = require("src/connections/mongoDB")
 const { v4 } = require('uuid');
+const { apiHandler } = require("src/helpers/api-handler")
 
-const requestHandler = async (req, res) => {
+const requestHandler = async (req, res, db) => {
     switch(req.method) {
         case "DELETE": {
             try {
@@ -19,10 +21,16 @@ const requestHandler = async (req, res) => {
         }
         case "GET": {
             try {
-                const rows = await queryPromise({ query: "SELECT * FROM todos" });
-                res.send({ todos: rows })
+                //const rows = await queryPromise({ query: "SELECT * FROM todos" });
+                //console.log(db)
+                if(db !== null) {
+                    const todos = await db.find({ }).toArray();
+                    res.send({ todos });
+                } else {
+                    throw new Error();
+                }
             } catch(error) {
-                console.error(error)
+                console.error("api", error)
                 res.status(500).json({ message: "Internal server error"});
             }
             break;
@@ -36,7 +44,7 @@ const requestHandler = async (req, res) => {
                 
                 res.status(204).send()
             } catch(error) {
-                console.error(error)
+                console.error("api error", error)
                 res.status(500).json({ message: "Internal server error"});
             }
             break;
@@ -70,4 +78,5 @@ const requestHandler = async (req, res) => {
     }
 };
 
-export default requestHandler;
+const handler = apiHandler(requestHandler);
+export default handler;

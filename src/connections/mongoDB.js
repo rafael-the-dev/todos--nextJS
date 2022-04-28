@@ -2,24 +2,36 @@ const config = require("config");
 const { MongoClient } = require("mongodb");
 
 const url = config.get("mongoDBConfig.url");
-const mongoDBConnection = new MongoClient(url);
-let clusterCollection;
+const dbName = config.get("mongoDBConfig.db");
+const collectionName = config.get("mongoDBConfig.collection");
 
-const createConnection = async () => {
+const mongoDBConnection = new MongoClient(url);
+
+let clusterCollection = null;
+
+const createMongoDBConnection = async ({ dbConfigObj }) => {
+    let clusterDB;
     try {
+
+        mongoDBConnection.on("connectionCreated", () => {
+            dbConfigObj.isConnected = true;
+            clusterDB = mongoDBConnection.db(dbName);
+            clusterCollection = clusterDB.collection(collectionName);
+            dbConfigObj.db = clusterCollection;
+        });
+
+        mongoDBConnection.on("close", () => {
+            dbConfigObj.db = null;
+            dbConfigObj.isConnected = false
+        });
+
         await mongoDBConnection.connect();
         console.log('Connected successfully to server');
-
-        const clusterDB = client.db(dbName);
-        clusterCollection = db.collection('documents');
-
     } catch(err) {
-        console.error(err);
+        console.error("mongo error", err);
         mongoDBConnection.close();
     }
+    return clusterDB;
 };
 
-createConnection();
-const db = () => clusterCollection;
-
-module.exports = { db };    
+module.exports = { createMongoDBConnection };    
