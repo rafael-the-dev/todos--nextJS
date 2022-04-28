@@ -6,7 +6,7 @@ import ShowMoreText from "react-show-more-text";
 import { AppContext } from 'src/context/AppContext';
 import { ItemsTypes } from "src/config"
 
-const Container = ({ ID, isActive, name, position }) => {
+const Container = ({ ID, isActive, task, position }) => {
     //const [ isChecked, setIsChecked ] = useState(!Boolean(isActive));
     const { fetchTodos } = useContext(AppContext)
     const isChecked = !Boolean(isActive);
@@ -52,7 +52,7 @@ const Container = ({ ID, isActive, name, position }) => {
     const changeHandler = async () => {
         try {
             await fetch(`/api/todos/${ID}`, {
-                body: JSON.stringify({ isActive: Boolean(isActive) ? 0 : 1, name, position }),
+                body: JSON.stringify({ isActive: Boolean(isActive) ? 0 : 1, task, position }),
                 method: "PATCH"
             })
             fetchTodos();
@@ -92,7 +92,7 @@ const Container = ({ ID, isActive, name, position }) => {
                             anchorClass='my-anchor-css-class'
                             expanded={false}
                         >
-                            { name }
+                            { task }
                     </ShowMoreText>
                 </div>
                 <button className="drag-button flex flex-col" ref={dragRef}>

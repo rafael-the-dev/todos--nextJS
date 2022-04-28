@@ -4,6 +4,10 @@ const { v4 } = require('uuid');
 const { apiHandler } = require("src/helpers/api-handler")
 
 const requestHandler = async (req, res, db) => {
+    if(db === null) {
+        throw new Error();
+    }
+
     switch(req.method) {
         case "DELETE": {
             try {
@@ -23,14 +27,10 @@ const requestHandler = async (req, res, db) => {
             try {
                 //const rows = await queryPromise({ query: "SELECT * FROM todos" });
                 //console.log(db)
-                if(db !== null) {
-                    const todos = await db.find({ }).toArray();
-                    res.send({ todos });
-                } else {
-                    throw new Error();
-                }
+                const todos = await db.find({ }).toArray();
+                res.send({ todos });
             } catch(error) {
-                console.error("api", error)
+                console.error("api error", error)
                 res.status(500).json({ message: "Internal server error"});
             }
             break;
@@ -39,9 +39,11 @@ const requestHandler = async (req, res, db) => {
             try {
                 const { from, to } = JSON.parse(req.body);
 
-                await queryPromise({ query: "UPDATE todos SET position=? WHERE ID=?", values: [ to.position, from.ID] });
-                await queryPromise({ query: "UPDATE todos SET position=? WHERE ID=?", values: [ from.position, to.ID] });
+                //await queryPromise({ query: "UPDATE todos SET position=? WHERE ID=?", values: [ to.position, from.ID] });
+                //await queryPromise({ query: "UPDATE todos SET position=? WHERE ID=?", values: [ from.position, to.ID] });
                 
+                await db.update({ ID: from.ID }, { $set: { position: to.position } });
+                await db.update({ ID: to.ID }, { $set: { position: from.position } });
                 res.status(204).send()
             } catch(error) {
                 console.error("api error", error)
@@ -53,7 +55,8 @@ const requestHandler = async (req, res, db) => {
             try {
                 const { isActive, name } = JSON.parse(req.body);
 
-                const rows = await queryPromise({ query: "SELECT * FROM todos"});
+                //const rows = await queryPromise({ query: "SELECT * FROM todos"});
+                const rows = await db.find({}).toArray();
 
                 let position = 0;
                 rows.forEach(item => {
@@ -63,10 +66,17 @@ const requestHandler = async (req, res, db) => {
                 });
                 position = position + 1;
 
-                await queryPromise({ 
+                /*await queryPromise({ 
                     query: `INSERT INTO todos (ID, name, isActive, position) VALUES (?, ?, ?, ?)`,
                     values: [ v4(), name, isActive, position]
-                });
+                })*/
+
+                await db.insert({
+                    ID: v4(),
+                    isActive,
+                    task: name,
+                    position
+                })
 
                 res.status(204).send()
             } catch(error) {
