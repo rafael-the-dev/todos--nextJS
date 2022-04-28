@@ -14,7 +14,8 @@ const requestHandler = async (req, res, db) => {
                 const { filter } = req.query;
                 
                 if(filter === "completed") {
-                    await queryPromise({ query: "DELETE FROM todos WHERE isActive=?", values: [ 0 ] });
+                    //await queryPromise({ query: "DELETE FROM todos WHERE isActive=?", values: [ 0 ] });
+                    await db.deleteMany({ isComplete: true });
                 }
                 res.status(204).send();
             } catch(error) {
@@ -53,7 +54,7 @@ const requestHandler = async (req, res, db) => {
         }
         case "POST": {
             try {
-                const { isActive, name } = JSON.parse(req.body);
+                const { isComplete, name } = JSON.parse(req.body);
 
                 //const rows = await queryPromise({ query: "SELECT * FROM todos"});
                 const rows = await db.find({}).toArray();
@@ -73,7 +74,7 @@ const requestHandler = async (req, res, db) => {
 
                 await db.insert({
                     ID: v4(),
-                    isActive,
+                    isComplete,
                     task: name,
                     position
                 })

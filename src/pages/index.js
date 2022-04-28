@@ -43,7 +43,7 @@ const Container = () => {
         event.preventDefault();
 
         const todo = {
-            isActive: checkboxRef.current.checked ? 0 : 1,
+            isComplete: checkboxRef.current.checked,
             name: inputRef.current.value
         };
 
@@ -66,11 +66,11 @@ const Container = () => {
     useEffect(() => {
         switch(filterKey) {
             case "COMPLETE": {
-                setFilteredTodos(todos.filter(todo => !Boolean(todo.isActive)));
+                setFilteredTodos(todos.filter(todo => todo.isComplete));
                 break;
             }
             case "ACTIVE": {
-                setFilteredTodos(todos.filter(todo => Boolean(todo.isActive)));
+                setFilteredTodos(todos.filter(todo => todo.isComplete));
                 break;
             }
             default: {

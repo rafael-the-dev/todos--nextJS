@@ -6,10 +6,10 @@ import ShowMoreText from "react-show-more-text";
 import { AppContext } from 'src/context/AppContext';
 import { ItemsTypes } from "src/config"
 
-const Container = ({ ID, isActive, task, position }) => {
+const Container = ({ ID, isComplete, task, position }) => {
     //const [ isChecked, setIsChecked ] = useState(!Boolean(isActive));
     const { fetchTodos } = useContext(AppContext)
-    const isChecked = !Boolean(isActive);
+    const isChecked = isComplete;
 
     const [collected, dragRef] = useDrag(
         () => ({
@@ -52,7 +52,7 @@ const Container = ({ ID, isActive, task, position }) => {
     const changeHandler = async () => {
         try {
             await fetch(`/api/todos/${ID}`, {
-                body: JSON.stringify({ isActive: Boolean(isActive) ? 0 : 1, task, position }),
+                body: JSON.stringify({ isActive: !isComplete, task, position }),
                 method: "PATCH"
             })
             fetchTodos();
