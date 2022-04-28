@@ -1,4 +1,4 @@
-const { queryPromise } = require("src/helpers/db");
+//const { queryPromise } = require("src/helpers/db");
 const { apiHandler } = require("src/helpers/api-handler")
 
 const requestHandler = async (req, res, db) => {
