@@ -95,13 +95,13 @@ const Container = ({ ID, isComplete, task, position }) => {
                             { task }
                     </ShowMoreText>
                 </div>
-                <button className="drag-button flex flex-col" ref={dragRef}>
+                <button aria-label='drag and drop' className="drag-button flex flex-col" ref={dragRef}>
                     <span className='drag-button__line dark:opacity-70'></span>
                     <span className='drag-button__line dark:opacity-70'></span>
                 </button>
                 <button 
-                    aria-label="delete" 
-                    className="bg-center bg-no-repeat item__button hover:bg-red-600 hover:p-3" 
+                    aria-label='delete todo' 
+                    className="hover:text-red-600 fa fa-close text-xl text-blue-600" 
                     onClick={deleteTodo}>
                 </button>
             </li>
@@ -128,8 +128,22 @@ const Container = ({ ID, isComplete, task, position }) => {
                         width: 24px;
                     }
 
-                    .drag-button__line:last-child {
+                    .drag-button__line:last-child, .delete-button__line:last-child {
                         margin-bottom: 0;
+                    }
+
+                    .delete-button__line {
+                        height: 3px;
+                        margin-bottom: 3px;
+                        width: 20px;
+                    }
+
+                    .delete-button__line:first-child {
+                        transform: rotate(70deg);
+                    }
+
+                    .delete-button__line:last-child {
+                        transform: rotate(-70deg);
                     }
                 `}
             </style>

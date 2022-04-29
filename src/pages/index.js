@@ -10,7 +10,7 @@ import styles from 'src/styles/home.module.css'
 import classNames from 'classnames'
 
 const Container = () => {
-    const { toggleTheme } = useContext(ThemeContext);
+    const { toggleTheme, theme } = useContext(ThemeContext);
     const { todos, fetchTodos } = useContext(AppContext);
 
     const [ filteredTodos , setFilteredTodos ] = useState([]);
@@ -90,7 +90,8 @@ const Container = () => {
                         </h1>
                         <button 
                             aria-label="theme toggle" 
-                            className="bg-center bg-no-repeat header__toggle-button"
+                            className={classNames("bg-center bg-no-repeat header__toggle-button", 
+                            theme.isDarkTheme ? "header__toggle-button--sun" : "header__toggle-button--moon")}
                             onClick={toggleTheme}></button>
                     </div>
                 </header>
@@ -167,9 +168,16 @@ const Container = () => {
                 }
 
                 .header__toggle-button {
-                    background-image: url(/images/icon-sun.svg);
                     height: 36px;
                     width: 36px;
+                }
+
+                .header__toggle-button--sun {
+                    background-image: url(/images/icon-sun.svg);
+                }
+
+                .header__toggle-button--moon {
+                    background-image: url(/images/icon-moon.svg);
                 }
 
                 .main {
