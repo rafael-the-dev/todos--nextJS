@@ -12,7 +12,13 @@ const apiHandler = (handler) => {
             await createMongoDBConnection({ dbConfigObj: dbConfig });
         }
 
-        handler(req, res, dbConfig.db);
+        try {
+            handler(req, res, dbConfig.db);
+        }
+        catch(err) {
+            console.error("handler error", err);
+            res.status(500).json({ message: "Internal server error"});
+        }
     }
 };
 
