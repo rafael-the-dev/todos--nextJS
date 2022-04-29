@@ -6,6 +6,15 @@
     color: #16838f;
 }
 
+.send-button {
+    background-color: #009fb1;
+    letter-spacing: 4px;
+}
+
+.send-button:hover {
+    background-color: #048593;
+}
+
 .dark .header {
     background-image: url(/images/bg-mobile-dark.jpg) !important;
 }

@@ -1,10 +1,11 @@
-import { useContext, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useContext, useCallback, useEffect, useMemo, useState } from 'react'
 
 import Head from 'next/head'
 import { ThemeContext } from 'src/context/ThemeContext'
 import { AppContext } from 'src/context/AppContext'
 
 import TodosItem from "src/components/TodosItem"
+import TextField from "src/components/TextField"
 
 import styles from 'src/styles/home.module.css'
 import classNames from 'classnames'
@@ -26,8 +27,7 @@ const Container = () => {
 
     const clickHandler = useCallback(prop => () => setFilterKey(prop), []);
 
-    const inputRef = useRef(null);
-    const checkboxRef = useRef(null);
+    
     const deleteCompletedTodos = useCallback(async () => {
         try {
             await fetch("/api/todos?filter=completed", {
@@ -39,29 +39,7 @@ const Container = () => {
             console.log(err)
         }
     }, [ fetchTodos ])
-    const saveTodo = useCallback(async (event) => {
-        event.preventDefault();
-
-        const todo = {
-            isComplete: checkboxRef.current.checked || false,
-            name: inputRef.current.value
-        };
-
-        try {
-            await fetch("/api/todos", {
-                body: JSON.stringify(todo),
-                method: "POST"
-            });
-
-            checkboxRef.current.checked = false;
-            inputRef.current.value = "";
-
-            fetchTodos();
-        } catch(err) {
-            console.log(err)
-        }
-
-    }, [ fetchTodos ])
+    
 
     useEffect(() => {
         switch(filterKey) {
@@ -97,22 +75,7 @@ const Container = () => {
                 </header>
                 <main className="main px-[5%] dark:bg-blue-900 sm:dark:bg-transparent">
                     <div className="container sm:mx-auto sm:max-w-[450px] md:max-w-[550px]">
-                        <form onSubmit={saveTodo} className="dark:bg-blue-700 flex items-center px-4 py-1 bg-slate-200">
-                            <label className='check-container'>
-                                <input 
-                                    className=''
-                                    ref={checkboxRef}
-                                    type="checkbox" 
-                                />
-                                <span className="checkmark"></span>
-                            </label>
-                            <input 
-                                className="bg-transparent grow text-base px-4 py-3 outline-none dark:text-slate-200
-                                text-blue-700" 
-                                placeholder='Create a new todo...'
-                                ref={inputRef}
-                            />
-                        </form>
+                        <TextField />
                         <div>
                             <ul className='mt-12'>
                                 { 
@@ -125,7 +88,7 @@ const Container = () => {
                                     </span>
                                     <button className="capitalize dark:text-slate-300 dark:opacity-40 
                                         hover:opacity-100 text-slate-500 dark:hover:opacity-70
-                                        hover:text-red-700 dark:hover:text-red-700 hover:font-bold"
+                                        hover:text-red-700 dark:hover:text-red-700"
                                         onClick={deleteCompletedTodos}>
                                         Clear completed
                                     </button>
