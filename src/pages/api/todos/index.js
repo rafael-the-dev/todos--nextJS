@@ -22,7 +22,6 @@ const requestHandler = async (req, res, db) => {
         }
         case "GET": {
             //const rows = await queryPromise({ query: "SELECT * FROM todos" });
-            //console.log(db)
             const todos = await db.find({ }).toArray();
             res.send({ todos });
             

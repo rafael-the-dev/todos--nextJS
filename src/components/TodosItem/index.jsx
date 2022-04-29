@@ -52,7 +52,7 @@ const Container = ({ ID, isComplete, task, position }) => {
     const changeHandler = async () => {
         try {
             await fetch(`/api/todos/${ID}`, {
-                body: JSON.stringify({ isActive: !isComplete, task, position }),
+                body: JSON.stringify({ isComplete: !isComplete, task, position }),
                 method: "PATCH"
             })
             fetchTodos();

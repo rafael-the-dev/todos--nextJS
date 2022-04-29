@@ -70,7 +70,7 @@ const Container = () => {
                 break;
             }
             case "ACTIVE": {
-                setFilteredTodos(todos.filter(todo => todo.isComplete));
+                setFilteredTodos(todos.filter(todo => !todo.isComplete));
                 break;
             }
             default: {

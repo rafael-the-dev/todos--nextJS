@@ -13,9 +13,10 @@ const apiHandler = (handler) => {
         }
 
         try {
-            handler(req, res, dbConfig.db);
-        }
-        catch(err) {
+            await handler(req, res, dbConfig.db);
+            //res.send({ todos: []})
+            //return;
+        } catch(err) {
             console.error("handler error", err);
             res.status(500).json({ message: "Internal server error"});
         }
