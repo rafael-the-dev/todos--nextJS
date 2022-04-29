@@ -21,7 +21,7 @@ const Container = () => {
     }), [ filteredTodos ]);
 
     const itemsNotCompleted = useMemo(() => {
-        return filteredTodos.filter(todo => Boolean(todo.isActive)).length
+        return filteredTodos.filter(todo => !todo.isComplete).length
     }, [ filteredTodos])
 
     const clickHandler = useCallback(prop => () => setFilterKey(prop), []);
@@ -43,7 +43,7 @@ const Container = () => {
         event.preventDefault();
 
         const todo = {
-            isComplete: checkboxRef.current.checked,
+            isComplete: checkboxRef.current.checked || false,
             name: inputRef.current.value
         };
 
