@@ -1,9 +1,9 @@
 const config = require("config");
 const { MongoClient } = require("mongodb");
 
-const url = config.get("mongoDBConfig.url");
-const dbName = config.get("mongoDBConfig.db");
-const collectionName = config.get("mongoDBConfig.collection");
+const url = "mongodb+srv://rafael-the-dev:iH.-qJftk8g9cgc@cluster0.z64j5.mongodb.net/myFirstDatabase?authMechanism=DEFAULT";//config.get("mongoDBConfig.url");
+const dbName = "myFirstDatabase";//config.get("mongoDBConfig.db");
+const collectionName = "todos";//config.get("mongoDBConfig.collection");
 
 const mongoDBConnection = new MongoClient(url);
 
