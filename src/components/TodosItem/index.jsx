@@ -8,7 +8,7 @@ import { ItemsTypes } from "src/config"
 
 const Container = ({ ID, isComplete, task, position }) => {
     //const [ isChecked, setIsChecked ] = useState(!Boolean(isActive));
-    const { fetchTodos } = useContext(AppContext)
+    const { fetchTodos, startLoading, stopLoading } = useContext(AppContext)
     const isChecked = isComplete;
 
     const [collected, dragRef] = useDrag(
@@ -27,15 +27,18 @@ const Container = ({ ID, isComplete, task, position }) => {
 
     const switchPositions = useCallback(async ({ from, to }) => {
         try {
+            startLoading();
             await fetch(`/api/todos`, {
                 body: JSON.stringify({ from, to }),
                 method: "PATCH"
             })
             fetchTodos();
+            stopLoading();
         } catch(err) {
+            stopLoading();
             console.log(err)
         }
-    }, [ fetchTodos ]);
+    }, [ fetchTodos, startLoading, stopLoading ]);
 
     const [collectedProps, drop] = useDrop(() => ({
         accept: [ ItemsTypes.TODOS_ITEM ],
@@ -51,12 +54,15 @@ const Container = ({ ID, isComplete, task, position }) => {
 
     const changeHandler = async () => {
         try {
+            startLoading();
             await fetch(`/api/todos/${ID}`, {
                 body: JSON.stringify({ isComplete: !isComplete, task, position }),
                 method: "PATCH"
             })
             fetchTodos();
+            stopLoading();
         } catch(err) {
+            stopLoading();
             console.log(err)
         }
     };

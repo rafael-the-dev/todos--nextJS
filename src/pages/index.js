@@ -13,7 +13,7 @@ import classNames from 'classnames'
 
 const Container = () => {
     const { toggleTheme, theme } = useContext(ThemeContext);
-    const { todos, fetchTodos } = useContext(AppContext);
+    const { todos, fetchTodos, startLoading, stopLoading } = useContext(AppContext);
 
     const [ filteredTodos , setFilteredTodos ] = useState([]);
     const [ filterKey, setFilterKey ] = useState("");
@@ -31,15 +31,18 @@ const Container = () => {
     
     const deleteCompletedTodos = useCallback(async () => {
         try {
+            startLoading();
             await fetch("/api/todos?filter=completed", {
                 method: "DELETE"
             });
 
             fetchTodos();
+            stopLoading();
         } catch(err) {
+            stopLoading();
             console.log(err)
         }
-    }, [ fetchTodos ])
+    }, [ fetchTodos, startLoading, stopLoading ])
     
 
     useEffect(() => {

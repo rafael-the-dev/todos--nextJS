@@ -3,7 +3,7 @@ import { AppContext } from 'src/context/AppContext'
 import { useCallback, useContext, useMemo, useRef, useState } from 'react'
 
 const Container = () => {
-    const { todos, fetchTodos } = useContext(AppContext);
+    const { todos, fetchTodos, startLoading, stopLoading } = useContext(AppContext);
 
     const [ value, setValue ] = useState("");
 
@@ -12,6 +12,7 @@ const Container = () => {
 
     const saveTodo = useCallback(async (event) => {
         event.preventDefault();
+        startLoading();
 
         const todo = {
             isComplete: checkboxRef.current.checked || false,
@@ -30,11 +31,13 @@ const Container = () => {
             setValue("")
 
             fetchTodos();
+            stopLoading();
         } catch(err) {
+            stopLoading();
             console.log(err)
         }
 
-    }, [ fetchTodos ]);
+    }, [ fetchTodos, startLoading, stopLoading ]);
 
     const labelMemo = useMemo(() => (
         <label className='check-container'>
