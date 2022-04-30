@@ -6,6 +6,7 @@ import { AppContext } from 'src/context/AppContext'
 
 import TodosItem from "src/components/TodosItem"
 import TextField from "src/components/TextField"
+import ProgressBar from "src/components/ProgressBar"
 
 import styles from 'src/styles/home.module.css'
 import classNames from 'classnames'
@@ -59,6 +60,7 @@ const Container = () => {
     
     return (
         <div>
+            <ProgressBar />
             <div className={classNames("bg-no-repeat app sm:dark:bg-blue-900", styles.app)}>
                 <Head title="Home" />
                 <header className="bg-center bg-cover bg-no-repeat px-[5%] pt-6 header sm:pt-12">

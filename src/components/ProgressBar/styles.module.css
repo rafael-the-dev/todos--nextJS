@@ -1,0 +1,22 @@
+.progress {
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    background-color: #048593;
+    display: none;
+    height: 4px;
+    width: 10px;
+}
+
+.progress--start {
+    animation-name: progress;
+    display: block;
+}
+
+@keyframes progress {
+    from {
+        width: 10px;
+    }
+    to {
+        width: 100%;
+    }
+  }
