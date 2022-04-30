@@ -7,7 +7,7 @@
     width: 10px;
 }
 
-.progress--start {
+.progressStart {
     animation-name: progress;
     display: block;
 }

@@ -5,6 +5,10 @@ AppContext.displayName = "AppContext";
 
 export const AppContextProvider = ({ children }) => {
     const [ todos, setTodos ] = useState([]);
+    const [ isLoading, setIsLoading ] = useState(false);
+
+    const stopLoading = useCallback(() => setIsLoading(false), []);
+    const startLoading = useCallback(() => setIsLoading(true), []);
 
     const fetchTodos = useCallback(() => {
         fetch("/api/todos")
@@ -20,7 +24,7 @@ export const AppContextProvider = ({ children }) => {
     }, [ fetchTodos ])
 
     return (
-        <AppContext.Provider value={{ fetchTodos, todos }}>
+        <AppContext.Provider value={{ fetchTodos, isLoading, startLoading, stopLoading, todos }}>
             { children }
         </AppContext.Provider>
     );
