@@ -8,6 +8,7 @@
 
 .send-button {
     background-color: #009fb1;
+    display: none;
     letter-spacing: 4px;
 }
 
@@ -17,6 +18,13 @@
 
 .dark .header {
     background-image: url(/images/bg-mobile-dark.jpg) !important;
+}
+
+
+@media screen and (min-width: 440px) {
+    .send-button {
+        display: inline-block;
+    }
 }
 
 @media screen and (min-width: 600px) {

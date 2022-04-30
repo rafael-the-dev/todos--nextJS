@@ -10,21 +10,31 @@ export const AppContextProvider = ({ children }) => {
     const stopLoading = useCallback(() => setIsLoading(false), []);
     const startLoading = useCallback(() => setIsLoading(true), []);
 
-    const fetchTodos = useCallback(() => {
-        fetch("/api/todos")
-            .then(res => res.json())
-            .then(data => setTodos(data.todos))
-            .catch(err => {
-                console.log(err);
-            });
+    const errorHandler = useCallback((func) => {
+        try {
+            func();
+        } catch(err) {
+            stopLoading();
+            console.log(err)
+        }
     }, []);
+
+    const fetchTodos = useCallback(() => {
+        errorHandler(async () => {
+            startLoading();
+            const res = await fetch("/api/todos");
+            const data = await res.json();
+            setTodos(data.todos);
+            stopLoading();
+        });
+    }, [ errorHandler, startLoading, stopLoading ]);
 
     useEffect(() => {
         fetchTodos();
     }, [ fetchTodos ])
 
     return (
-        <AppContext.Provider value={{ fetchTodos, isLoading, startLoading, stopLoading, todos }}>
+        <AppContext.Provider value={{ errorHandler, fetchTodos, isLoading, startLoading, stopLoading, todos }}>
             { children }
         </AppContext.Provider>
     );

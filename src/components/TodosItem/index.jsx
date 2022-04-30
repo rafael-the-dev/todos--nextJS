@@ -8,7 +8,7 @@ import { ItemsTypes } from "src/config"
 
 const Container = ({ ID, isComplete, task, position }) => {
     //const [ isChecked, setIsChecked ] = useState(!Boolean(isActive));
-    const { fetchTodos, startLoading, stopLoading } = useContext(AppContext)
+    const { errorHandler, fetchTodos, startLoading, stopLoading } = useContext(AppContext)
     const isChecked = isComplete;
 
     const [collected, dragRef] = useDrag(
@@ -26,7 +26,7 @@ const Container = ({ ID, isComplete, task, position }) => {
     );
 
     const switchPositions = useCallback(async ({ from, to }) => {
-        try {
+        errorHandler(async () => {
             startLoading();
             await fetch(`/api/todos`, {
                 body: JSON.stringify({ from, to }),
@@ -34,11 +34,8 @@ const Container = ({ ID, isComplete, task, position }) => {
             })
             fetchTodos();
             stopLoading();
-        } catch(err) {
-            stopLoading();
-            console.log(err)
-        }
-    }, [ fetchTodos, startLoading, stopLoading ]);
+        });
+    }, [ errorHandler, fetchTodos, startLoading, stopLoading ]);
 
     const [collectedProps, drop] = useDrop(() => ({
         accept: [ ItemsTypes.TODOS_ITEM ],
@@ -53,7 +50,7 @@ const Container = ({ ID, isComplete, task, position }) => {
       )
 
     const changeHandler = async () => {
-        try {
+        errorHandler(async () => {
             startLoading();
             await fetch(`/api/todos/${ID}`, {
                 body: JSON.stringify({ isComplete: !isComplete, task, position }),
@@ -61,17 +58,18 @@ const Container = ({ ID, isComplete, task, position }) => {
             })
             fetchTodos();
             stopLoading();
-        } catch(err) {
-            stopLoading();
-            console.log(err)
-        }
+        });
     };
 
     const deleteTodo = async() => {
-        await fetch(`/api/todos/${ID}`, {
-            method: "DELETE"
-        });
-        fetchTodos();
+        errorHandler(async () => {
+            startLoading();
+            await fetch(`/api/todos/${ID}`, {
+                method: "DELETE"
+            });
+            fetchTodos();
+            stopLoading();
+        })
     };
 
     return (
@@ -98,7 +96,7 @@ const Container = ({ ID, isComplete, task, position }) => {
                             anchorClass='my-anchor-css-class'
                             expanded={false}
                         >
-                            { task }
+                        { task }
                     </ShowMoreText>
                 </div>
                 <button aria-label='drag and drop' className="drag-button flex flex-col" ref={dragRef}>

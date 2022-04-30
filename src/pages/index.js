@@ -13,7 +13,7 @@ import classNames from 'classnames'
 
 const Container = () => {
     const { toggleTheme, theme } = useContext(ThemeContext);
-    const { todos, fetchTodos, startLoading, stopLoading } = useContext(AppContext);
+    const { todos, errorHandler, fetchTodos, startLoading, stopLoading } = useContext(AppContext);
 
     const [ filteredTodos , setFilteredTodos ] = useState([]);
     const [ filterKey, setFilterKey ] = useState("");
@@ -29,8 +29,8 @@ const Container = () => {
     const clickHandler = useCallback(prop => () => setFilterKey(prop), []);
 
     
-    const deleteCompletedTodos = useCallback(async () => {
-        try {
+    const deleteCompletedTodos = useCallback(() => {
+        errorHandler(async () => {
             startLoading();
             await fetch("/api/todos?filter=completed", {
                 method: "DELETE"
@@ -38,10 +38,7 @@ const Container = () => {
 
             fetchTodos();
             stopLoading();
-        } catch(err) {
-            stopLoading();
-            console.log(err)
-        }
+        });
     }, [ fetchTodos, startLoading, stopLoading ])
     
 

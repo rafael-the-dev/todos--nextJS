@@ -40,7 +40,7 @@ const requestHandler = async (req, res, db) => {
             break;
         }
         case "POST": {
-            const { isComplete, name } = JSON.parse(req.body);
+            const { isComplete, task } = JSON.parse(req.body);
 
             //const rows = await queryPromise({ query: "SELECT * FROM todos"});
             const rows = await db.find({}).toArray();
@@ -61,8 +61,8 @@ const requestHandler = async (req, res, db) => {
             await db.insert({
                 ID: v4(),
                 isComplete,
-                task: name,
-                position
+                position,
+                task
             })
 
             res.status(204).send()

@@ -3,7 +3,7 @@ import { AppContext } from 'src/context/AppContext'
 import { useCallback, useContext, useMemo, useRef, useState } from 'react'
 
 const Container = () => {
-    const { todos, fetchTodos, startLoading, stopLoading } = useContext(AppContext);
+    const { errorHandler, fetchTodos, startLoading, stopLoading } = useContext(AppContext);
 
     const [ value, setValue ] = useState("");
 
@@ -12,32 +12,34 @@ const Container = () => {
 
     const saveTodo = useCallback(async (event) => {
         event.preventDefault();
-        startLoading();
+        const inputValue = inputRef.current.value || "";
+        const task = inputValue.trim()
 
-        const todo = {
-            isComplete: checkboxRef.current.checked || false,
-            name: inputRef.current.value
-        };
+        errorHandler(async () => {
 
-        try {
-            await fetch("/api/todos", {
-                body: JSON.stringify(todo),
-                method: "POST"
-            });
+            if(Boolean(task)) {
+                startLoading();
 
-            checkboxRef.current.checked = false;
-            inputRef.current.value = "";
+                const todo = {
+                    isComplete: checkboxRef.current.checked || false,
+                    task
+                };
 
-            setValue("")
+                await fetch("/api/todos", {
+                    body: JSON.stringify(todo),
+                    method: "POST"
+                });
 
-            fetchTodos();
-            stopLoading();
-        } catch(err) {
-            stopLoading();
-            console.log(err)
-        }
+                checkboxRef.current.checked = false;
+                inputRef.current.value = "";
 
-    }, [ fetchTodos, startLoading, stopLoading ]);
+                setValue("")
+
+                fetchTodos();
+                stopLoading();
+            }
+        });
+    }, [ errorHandler, fetchTodos, startLoading, stopLoading ]);
 
     const labelMemo = useMemo(() => (
         <label className='check-container'>
@@ -64,7 +66,7 @@ const Container = () => {
         <form onSubmit={saveTodo} className="dark:bg-blue-700 flex items-center px-4 py-1 bg-slate-200">
             { labelMemo }
             { inputMemo }
-            { value && <button 
+            { value.trim() && <button 
                 aria-label='submit' 
                 className={classNames("send-button fa fa-send text-slate-200 px-3 py-2 text-sm")}
                 type='submit'>
