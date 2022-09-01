@@ -5,9 +5,9 @@ const requestHandler = async (req, res, db) => {
     if(db === null) {
         throw new Error();
     }
-    
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
+
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
       "Access-Control-Allow-Headers",
       "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     );
