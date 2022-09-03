@@ -13,9 +13,18 @@ const apiHandler = (handler) => {
         }
 
         try {
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.setHeader(
+                "Access-Control-Allow-Headers",
+                "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+            );
+
+            if (req.method === "OPTIONS") {
+                res.setHeader("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+                return res.status(200).json({});
+            }
+
             await handler(req, res, dbConfig.db);
-            //res.send({ todos: []})
-            //return;
         } catch(err) {
             console.error("handler error", err);
             res.status(500).json({ message: "Internal server error", err });
